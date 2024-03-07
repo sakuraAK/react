@@ -1,44 +1,20 @@
-import reactCoreConceptImage from "./assets/react-core-concepts.png";
-import componentsImage from "./assets/components.png";
-import jsxImage from "./assets/jsx-ui.png"
 import {CORE_CONCEPTS} from "./data";
-
-const synonyms = ["Fundamental", "Elemental", "Foundational"];
-
-function randInt(maxValue) {
-  return Math.floor(Math.random() * maxValue);
-}
+import Header  from "./components/Header/Header.jsx";
+import CoreConcept from "./components/CoreConcept/CoreConcept.jsx";
+import Button from "./components/Button/Button.jsx";
+import { useState } from "react";
 
 
-function CoreConcept({image, title, description}) {
-  return (
-    <li>
-      <img src={image} alt={title}/>
-      <h3>{title}</h3>
-      <p>{description}</p>
-    </li>
-  );
-}
+export default function App() {
+  // console.log("App is loading");
+  const [exampleText, setExampleText] = useState("Click the button");
 
-function Header() {
-  let newValue = synonyms[randInt(synonyms.length)];
-  return (
-    <header>
-      <img src={reactCoreConceptImage} alt="Stylized atom" />
-      <h1>React Essentials</h1>
-      <p>
-        {newValue} React concepts you will need for almost any app you are
-        going to build!
-      </p>
-    </header>
-  );
-}
+  function handleClick(selectedButton) {
+      setExampleText(selectedButton);
+      console.log(exampleText);
+  }
 
-
-
-
-
-function App() {
+  
   return (
     <div>
       <Header />
@@ -56,83 +32,25 @@ function App() {
           </ul>
         </section>
       </main>
+      <section id="examples">
+        <h2>Examples</h2>
+        <menu>
+          <Button clickHandler={()=> handleClick("Components")}>Components</Button>
+          <Button clickHandler={()=> handleClick("Jsx")}>Jsx</Button>
+          <Button clickHandler={()=> handleClick("Props")}>Props</Button>
+          <Button clickHandler={()=> handleClick("State")}>State</Button>
+          {/* <button>Components</button>
+        <button>JSX</button>
+        <button>Props</button> */}
+        </menu>
+        <p>{exampleText}</p>
+      </section>
+      
     </div>
   );
 }
 
-export default App;
 
-// function MainGoal() {
-//   return (
-//     <p>
-//       My main goal: Learn React in-depth and from the ground up.
-//     </p>
 
-//   );
-// }
-
-// function App() {
-//   return (
-//     <div id="core-concepts">
-//       <h1>Time to Practice!</h1>
-//       <p>
-//         Build a <code>&lt;MainGoal&gt;</code> component and insert it below this
-//         text.
-//       </p>
-//       <p>
-//         Your <code>&lt;MainGoal&gt;</code> component should simply output some
-//         text that describes your main course goal (e.g., &quot;My main goal:
-//         Learn React in great detail&quot;).
-//       </p>
-//       <p>
-//         <strong>Important:</strong> You custom component must contain the text
-//         &quot;My main goal:&quot;
-//       </p>
-//       <p>
-//         <strong>Also important:</strong> For the automatic checks to succeed,
-//         you <strong>must export</strong> your custom component function! Not as
-//         a default but simply by adding the <code>export</code> keyword in front
-//         of your function (e.g., <code>export function YOUR_COMPONENT_NAME</code>
-//         ).
-//       </p>
-//       {/* DON'T CHANGE THE TEXT / CONTENT ABOVE */}
-//       {/* OUTPUT YOUR COMPONENT HERE */}
-//       <MainGoal/>
-//     </div>
-//   );
-// }
-
-// export default App;
-
-// export const userData = {
-//   firstName: "Andrey", // feel free to replace the name value
-//   lastName: "Krutauz", // feel free to replace the name value
-//   title: "Instructor", // feel free to replace the title value
-// };
-
-// // Edit the User component code to output the userData data
-// export function User() {
-//   return (
-//     <div id="user" data-testid="user">
-//       <h2>
-//         {userData.firstName} {userData.lastName}
-//       </h2>
-//       <p>{userData.title}</p>
-//     </div>
-//   );
-// }
-
-// // DON'T edit the App component code
-// function App() {
-//   return (
-//     <div id="core-concepts">
-//       <h1>Time to Practice</h1>
-//       <p>Welcome on board of this course! You got this </p>
-//       <User />
-//     </div>
-//   );
-// }
-
-// export default App;
 
 
