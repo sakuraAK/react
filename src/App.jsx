@@ -43,7 +43,16 @@ export default function App() {
         <button>JSX</button>
         <button>Props</button> */}
         </menu>
-        <p>{exampleText}</p>
+        <div id="tab-content">
+          <h3></h3>
+          <p></p>
+          <pre>
+            <code>
+              
+            </code>
+          </pre>
+        </div>
+        {/* <p>{exampleText}</p> */}
       </section>
       
     </div>
