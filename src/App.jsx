@@ -7,81 +7,107 @@ import { useState } from "react";
 
 
 export default function App() {
-  const [exampleText, setExampleText] = useState();
-
-  const exampleHtml = !exampleText ? 
-  (<p>Click on a button</p>) :
-  (<div id="tab-content">
-    <h3>{EXAMPLES[exampleText].title}</h3>
-    <p>{EXAMPLES[exampleText].description}</p>
-    <pre>
-      <code>
-        {EXAMPLES[exampleText].code}
-      </code>
-    </pre>
-  </div>);
-
-  function handleClick(selectedButton) {
-    setExampleText(selectedButton);
-    console.log(exampleText);
-  }
-
-
-  return (
-    <div>
-      <Header />
-      <main>
-        <h2>Core concepts</h2>
-        <section id="core-concepts">
-          <ul>
-            <CoreConcept {...CORE_CONCEPTS[0]} />
-            <CoreConcept
-              title={CORE_CONCEPTS[1].title}
-              image={CORE_CONCEPTS[1].image}
-              description={CORE_CONCEPTS[1].description} />
-            <CoreConcept {...CORE_CONCEPTS[2]} />
-            <CoreConcept {...CORE_CONCEPTS[3]} />
-          </ul>
-        </section>
-      </main>
-      <section id="examples">
-        <h2>Examples</h2>
-        <menu>
-          <Button clickHandler={() => handleClick("components")}>Components</Button>
-          <Button clickHandler={() => handleClick("jsx")}>Jsx</Button>
-          <Button clickHandler={() => handleClick("props")}>Props</Button>
-          <Button clickHandler={() => handleClick("state")}>State</Button>
-        </menu>
-        {/* {!exampleText && (<p>Click on a button</p>)}
-        {exampleText && (<div id="tab-content">
-          <h3>{EXAMPLES[exampleText].title}</h3>
-          <p>{EXAMPLES[exampleText].description}</p>
-          <pre>
-            <code>
-              {EXAMPLES[exampleText].code}
-            </code>
-          </pre>
-        </div>)} */}
-        {/* {!exampleText ?
-          (<p>Click on a button</p>) :
-          (<div id="tab-content">
-            <h3>{EXAMPLES[exampleText].title}</h3>
-            <p>{EXAMPLES[exampleText].description}</p>
-            <pre>
-              <code>
-                {EXAMPLES[exampleText].code}
-              </code>
-            </pre>
-          </div>)
-        } */}
-
-        {exampleHtml}
-
-      </section>
-
-    </div>
-  );
+     return (
+        <div>
+            <p className="active">Style me!</p>
+            <button>Toggle style</button>
+        </div>
+    );
 }
+
+
+// export default function App() {
+//   const [exampleText, setExampleText] = useState();
+
+//   const exampleHtml = !exampleText ?
+//     (<p>Click on a button</p>) :
+//     (<div id="tab-content">
+//       <h3>{EXAMPLES[exampleText].title}</h3>
+//       <p>{EXAMPLES[exampleText].description}</p>
+//       <pre>
+//         <code>
+//           {EXAMPLES[exampleText].code}
+//         </code>
+//       </pre>
+//     </div>);
+
+//   function handleClick(selectedButton) {
+//     setExampleText(selectedButton);
+//     console.log(exampleText);
+//   }
+
+//   function getBtnClass(btnName) {
+//     return exampleText === btnName ? "active" : ""
+//   }
+
+//   return (
+//     <div>
+//       <Header></Header>
+//       <main>
+//         <h2>Core concepts</h2>
+//         <section id="core-concepts">
+//           <ul>
+//             {CORE_CONCEPTS.map((coreConcept) => (<CoreConcept key={coreConcept.title} {...coreConcept}/>))}
+//           </ul>
+//         </section>
+//         <section id="examples">
+//           <h2>Examples</h2>
+//           <menu>
+//             {Object.keys(EXAMPLES).map((coreConceptTitle) => (
+//               <Button key={coreConceptTitle}
+//                 clickHandler={() => handleClick(coreConceptTitle)}
+//                 buttonClass={getBtnClass(coreConceptTitle)}>
+//                 {coreConceptTitle.toUpperCase()}
+//               </Button>
+//               ))
+//             }
+//             {/* <Button 
+//             clickHandler={() => handleClick("components")}
+//             buttonClass={getBtnClass("components")}
+//             >Components</Button>
+//             <Button 
+//             clickHandler={() => handleClick("jsx")}
+//             buttonClass={getBtnClass("jsx")}
+//             >Jsx</Button>
+//             <Button 
+//             clickHandler={() => handleClick("props")}
+//             buttonClass={getBtnClass("props")}
+//             >Props</Button>
+//             <Button 
+//             clickHandler={() => handleClick("state")}
+//             buttonClass={getBtnClass("state")}
+//             >State</Button> */}
+//           </menu>
+//           {/* {!exampleText && (<p>Click on a button</p>)}
+//         {exampleText && (<div id="tab-content">
+//           <h3>{EXAMPLES[exampleText].title}</h3>
+//           <p>{EXAMPLES[exampleText].description}</p>
+//           <pre>
+//             <code>
+//               {EXAMPLES[exampleText].code}
+//             </code>
+//           </pre>
+//         </div>)} */}
+//           {/* {!exampleText ?
+//           (<p>Click on a button</p>) :
+//           (<div id="tab-content">
+//             <h3>{EXAMPLES[exampleText].title}</h3>
+//             <p>{EXAMPLES[exampleText].description}</p>
+//             <pre>
+//               <code>
+//                 {EXAMPLES[exampleText].code}
+//               </code>
+//             </pre>
+//           </div>)
+//         } */}
+
+//           {exampleHtml}
+
+//         </section>
+//       </main>
+//     </div>
+//   );
+// }
 
 
 

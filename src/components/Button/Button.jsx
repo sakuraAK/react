@@ -1,12 +1,14 @@
 
-export default function Button({children, clickHandler}) {
+export default function Button({children, clickHandler, buttonClass}) {
     // console.log("Button is loading");
     // const clickHandler = () => {console.log(`${children} clicked`)};
     // function clickHandler() {
     //     console.log(`${children} clicked`);
     // }
+    let isClicked = true;
+
 
     return (
-        <li><button onClick={clickHandler}>{children}</button></li>
+        <li><button className={buttonClass} onClick={clickHandler}>{children}</button></li>
     );
 }
