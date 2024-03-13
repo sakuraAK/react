@@ -1,12 +1,12 @@
 import "./CoreConcept.css";
 
-export default function CoreConcept({image, title, description}) {
+export default function CoreConcept(props) {
     // console.log("CoreConcept is loading");
     return (
       <li>
-        <img src={image} alt={title}/>
-        <h3>{title}</h3>
-        <p>{description}</p>
+        <img src={props.image} alt={props.title}/>
+        <h3>{props.title}</h3>
+        <p>{props.description}</p>
       </li>   
     );
   }
