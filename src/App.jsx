@@ -3,16 +3,16 @@ import Header from "./components/Header/Header.jsx";
 import CoreConcept from "./components/CoreConcept/CoreConcept.jsx";
 import Button from "./components/Button/Button.jsx";
 import { useState } from "react";
+import NewHeader from "./components/NewHeader/NewHeader.jsx"
 
 
 
 export default function App() {
-     return (
-        <div>
-            <p className="active">Style me!</p>
-            <button>Toggle style</button>
-        </div>
-    );
+  return (
+    <>
+    <NewHeader/>
+    </>
+  );
 }
 
 
