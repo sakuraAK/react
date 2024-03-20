@@ -1,6 +1,6 @@
-import goldPotImage from "../../assets/pot-of-gold.png";
+import goldPotImage from "../../../assets/pot-of-gold.png";
 
-export default function NewHeader() {
+export default function Header() {
     return (
         <div id="header">
             <header>
