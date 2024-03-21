@@ -1,26 +1,35 @@
-import { useState } from "react";
 
-export default function UserInput() {
 
-    const [userInput, updateUserInput] = useState({
-        initialInvestment: 15000,
-        annualInvestment: 1000,
-        expectedReturn: 6,
-        duration: 10
-    });
-
+export default function UserInput({userInput, onInputChange}) {
     return (
         <>
         <section id="user-input">
-            <div>
+            <div className="input-group">
                 <label>Initial Investment</label>
-                <input type="number" required value={userInput.initialInvestment}/>
+                <input 
+                type="number" 
+                onChange={(event) => onInputChange(event, "initialInvestment")} 
+                required value={userInput.initialInvestment}/>
+                
                 <label>Annual Investment</label>
-                <input type="number" required value={userInput.annualInvestment}/>
-                <label>Expected Return(%)</label>
-                <input type="number" required value={userInput.expectedReturn}/>
-                <label>Duration(years)</label>
-                <input type="number" required value={userInput.duration}/>
+                <input 
+                type="number" 
+                onChange={(event) => onInputChange(event, "annualInvestment")} 
+                required value={userInput.annualInvestment}/>
+            </div>
+
+            <div className="input-group">
+                <label>Expected Return</label>
+                <input 
+                type="number"
+                onChange={(event) => onInputChange(event, "expectedReturn")}  
+                required value={userInput.expectedReturn}/>
+
+                <label>Duration</label>
+                <input 
+                type="number"
+                onChange={(event) => onInputChange(event, "duration")}  
+                required value={userInput.duration}/>
             </div>
         </section>
         </>
