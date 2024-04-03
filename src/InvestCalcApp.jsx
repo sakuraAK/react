@@ -24,7 +24,11 @@ export default function InvestCalcApp() {
         <>
             <Header/>
             <UserInput userInput={userInput} onInputChange={onInputChange}/>
-            <Results results={calculateInvestmentResults(userInput)}/>
+            {
+                userInput.duration > 0 ? (<Results results={calculateInvestmentResults(userInput)}/>) :
+                <p>Duration should be greater than 0</p>
+            }
+          
         </>
     );
 }

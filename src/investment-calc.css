@@ -5,13 +5,14 @@
 }
 
 body {
-  margin: 0;
+  margin: 6;
   font-family: 'Quicksand', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: radial-gradient(#67dfb3, #1a1f1d);
   color: #e1eeeb;
   min-height: 100vh;
+  padding: 5;
 }
 
 #header {
@@ -66,6 +67,7 @@ body {
 }
 
 #result {
+  display: block;
   max-width: 50rem;
   margin: 2rem auto;
   padding: 1rem;
@@ -77,6 +79,8 @@ body {
 #result thead {
   font-size: 0.7rem;
   color: #83e6c0;
+  margin-left: 20;
+  padding: 20;
 }
 
 #result tbody {
