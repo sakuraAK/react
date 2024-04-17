@@ -1,4 +1,30 @@
-@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Roboto+Condensed:wght@400;700&display=swap");
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 3rem;
+  background-color: #2d2c2c;
+  color: #959090;
+  text-align: center;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+  margin: 1rem;
+  padding: 1rem;
+  background-color: #8567fd;
+  color: white;
+  border: 2px solid #8567fd;
+  border-radius: 6px;
+}
+
+
+/* @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Roboto+Condensed:wght@400;700&display=swap");
 
 * {
   box-sizing: border-box;
@@ -83,4 +109,4 @@ main h2 {
 
 #tab-content code {
   font-size: 1rem;
-}
+} */
