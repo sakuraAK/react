@@ -1,12 +1,12 @@
 import ReactDOM from "react-dom/client";
 
-//import App from "./App.jsx";
+import App from "./App.jsx";
 //import InvestCalcApp from "./InvestCalcApp.jsx";
-import ChallengeApp from "./ChallengeApp.jsx";
-//import "./index.css";
+//import ChallengeApp from "./ChallengeApp.jsx";
+import "./index.css";
 //import "./test-style.css";
 //import "./investment-calc.css";
-import "./challenge-app.css";
+//import "./challenge-app.css";
 
 const entryPoint = document.getElementById("root");
-ReactDOM.createRoot(entryPoint).render(<ChallengeApp/>);
+ReactDOM.createRoot(entryPoint).render(<App/>);
