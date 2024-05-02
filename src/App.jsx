@@ -1,107 +1,117 @@
-import { CORE_CONCEPTS, EXAMPLES } from "./data";
-import Header from "./components/Header/Header.jsx";
-import CoreConcept from "./components/CoreConcept/CoreConcept.jsx";
-import Button from "./components/Button/Button.jsx";
-import { useState, useRef } from "react";
+import { useRef, useState, useCallback, useEffect } from 'react';
 
+import Places from './components/Places.jsx';
+import Modal from './components/Modal.jsx';
+import DeleteConfirmation from './components/DeleteConfirmation.jsx';
+import logoImg from './assets/logo.png';
+import AvailablePlaces from './components/AvailablePlaces.jsx';
+import { updateUserPlaces, fetchUserPlaces } from './http.js';
 
+function App() {
+  // const selectedPlace = useRef();
 
+  const [userPlaces, setUserPlaces] = useState([]);
 
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
-export default function App() {
-  const [exampleText, setExampleText] = useState();
-
-  const exampleHtml = !exampleText ?
-    (<p>Click on a button</p>) :
-    (<div id="tab-content">
-      <h3>{EXAMPLES[exampleText].title}</h3>
-      <p>{EXAMPLES[exampleText].description}</p>
-      <pre>
-        <code>
-          {EXAMPLES[exampleText].code}
-        </code>
-      </pre>
-    </div>);
-
-  function handleClick(selectedButton) {
-    setExampleText(selectedButton);
-    console.log(exampleText);
+  function handleStartRemovePlace(place) {
+    //setModalIsOpen(true);
+    selectedPlace.current = place;
   }
 
-  function getBtnClass(btnName) {
-    return exampleText === btnName ? "active" : ""
+  function handleStopRemovePlace() {
+    setModalIsOpen(false);
   }
+
+  async function handleSelectPlace(selectedPlace) {
+    setUserPlaces((prevPickedPlaces) => {
+      if (!prevPickedPlaces) {
+        prevPickedPlaces = [];
+      }
+      if (prevPickedPlaces.some((place) => place.id === selectedPlace.id)) {
+        return prevPickedPlaces;
+      }
+      return [selectedPlace, ...prevPickedPlaces];
+    });
+    try {
+      const result = await updateUserPlaces([selectedPlace, ...userPlaces]);
+    }    
+    catch(error) {
+      //...
+    }
+
+  }
+
+  // const handleRemovePlace = useCallback(async function handleRemovePlace() {
+  //   setUserPlaces((prevPickedPlaces) =>
+  //     prevPickedPlaces.filter((place) => place.id !== selectedPlace.current.id)
+  //   );
+
+  //   setModalIsOpen(false);
+  // }, []);
+
+
+  async function handleRemovePlace(selectedPlace) {
+    setUserPlaces((prevPickedPlaces) =>
+      prevPickedPlaces.filter((place) => place.id !== selectedPlace.id)
+    );
+    
+    try {
+      await updateUserPlaces(userPlaces.filter((place) => place.id !== selectedPlace.id));
+    }
+    catch(error) {
+      //...
+    }
+    //setModalIsOpen(false);
+  }
+
+  useEffect(() =>{
+    async function getUserPlaces() {
+      //setIsLoading(true);
+      try {
+        const places = await fetchUserPlaces(); 
+        setUserPlaces(places);
+      }
+      catch(error) {
+        setError({message: error.message});
+      }
+      //setIsLoading(false);
+    }
+      
+    getUserPlaces();
+
+    
+  }, []);
 
   return (
-    <div>
-      <Header></Header>
+    <>
+      {/* <Modal open={modalIsOpen} onClose={handleStopRemovePlace}>
+        <DeleteConfirmation
+          onCancel={handleStopRemovePlace}
+          onConfirm={handleRemovePlace}
+        />
+      </Modal> */}
+
+      <header>
+        <img src={logoImg} alt="Stylized globe" />
+        <h1>PlacePicker</h1>
+        <p>
+          Create your personal collection of places you would like to visit or
+          you have visited.
+        </p>
+      </header>
       <main>
-        <h2>Core concepts</h2>
-        <section id="core-concepts">
-          <ul>
-            {CORE_CONCEPTS.map((coreConcept) => (<CoreConcept key={coreConcept.title} {...coreConcept}/>))}
-          </ul>
-        </section>
-        <section id="examples">
-          <h2>Examples</h2>
-          <menu>
-            {Object.keys(EXAMPLES).map((coreConceptTitle) => (
-              <Button key={coreConceptTitle}
-                clickHandler={() => handleClick(coreConceptTitle)}
-                buttonClass={getBtnClass(coreConceptTitle)}>
-                {coreConceptTitle.toUpperCase()}
-              </Button>
-              ))
-            }
-            {/* <Button 
-            clickHandler={() => handleClick("components")}
-            buttonClass={getBtnClass("components")}
-            >Components</Button>
-            <Button 
-            clickHandler={() => handleClick("jsx")}
-            buttonClass={getBtnClass("jsx")}
-            >Jsx</Button>
-            <Button 
-            clickHandler={() => handleClick("props")}
-            buttonClass={getBtnClass("props")}
-            >Props</Button>
-            <Button 
-            clickHandler={() => handleClick("state")}
-            buttonClass={getBtnClass("state")}
-            >State</Button> */}
-          </menu>
-          {/* {!exampleText && (<p>Click on a button</p>)}
-        {exampleText && (<div id="tab-content">
-          <h3>{EXAMPLES[exampleText].title}</h3>
-          <p>{EXAMPLES[exampleText].description}</p>
-          <pre>
-            <code>
-              {EXAMPLES[exampleText].code}
-            </code>
-          </pre>
-        </div>)} */}
-          {/* {!exampleText ?
-          (<p>Click on a button</p>) :
-          (<div id="tab-content">
-            <h3>{EXAMPLES[exampleText].title}</h3>
-            <p>{EXAMPLES[exampleText].description}</p>
-            <pre>
-              <code>
-                {EXAMPLES[exampleText].code}
-              </code>
-            </pre>
-          </div>)
-        } */}
+        <Places
+          title="I'd like to visit ..."
+          fallbackText="Select the places you would like to visit below."
+          places={userPlaces}
+          onSelectPlace={handleRemovePlace}
+        />
 
-          {exampleHtml}
-
-        </section>
+        <AvailablePlaces onSelectPlace={handleSelectPlace} />
       </main>
-    </div>
+    </>
   );
 }
 
-
-
-
-
+export default App;
