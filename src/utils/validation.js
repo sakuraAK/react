@@ -7,6 +7,7 @@ export function isNotEmpty(value) {
 }
 
 export function hasMinLength(value, minLength) {
+  console.log(value.length >= minLength);
   return value.length >= minLength;
 }
 
