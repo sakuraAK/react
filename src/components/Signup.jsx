@@ -1,4 +1,8 @@
+import { useState } from "react";
+
 export default function Signup() {
+
+  const [passwordsDoNotMatch, setPasswordsDoNotMatch] = useState(false);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -12,6 +16,10 @@ export default function Signup() {
 
     console.log(data);
     //console.log(fd.get("acquisition"));
+
+    if (data["confirm-password"] !== data.password) {
+      setPasswordsDoNotMatch(true);
+    }
   }
 
 
@@ -29,6 +37,7 @@ export default function Signup() {
         <div className="control">
           <label htmlFor="password">Password</label>
           <input id="password" type="password" name="password" required minLength={8} />
+          { passwordsDoNotMatch && <div className="control-error"><p>Passwords do not match!</p></div>}
         </div>
 
         <div className="control">
