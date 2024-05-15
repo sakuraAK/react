@@ -7,34 +7,49 @@ export default function Login() {
   const email = useRef();
   const password = useRef();
 
+  const [emailIsInvalid, setEmailIsInvalid] = useState(false);
+  const [passwordIsInvalid, setPasswordIsInvalid] = useState(false);
 
-  function handleSubmitEvent(event) {
-      event.preventDefault();
-      console.log("User email: " + email.current.value);
-      console.log("User password: " + password.current.value);
+
+    function handleSubmitEvent(event) {
+        event.preventDefault();
+
+        console.log("User email: " + email.current.value);
+        console.log("User password: " + password.current.value);
+
+        //validation logic
+        const emailStr = email.current.value;
+        setEmailIsInvalid(!emailStr.includes("@"));
+
+        const passwordStr = password.current.value;
+        setPasswordIsInvalid(passwordStr.length < 6);
+
+
   }
 
 
   function handleResetClick(event) {
     event.preventDefault();
+ 
     email.current.value = "";
     password.current.value = "";
   }
   
 
 
-  const emailIsInvalid = false;
-  const passwordIsInvalid = false;
+  let emailValidationHtml = emailIsInvalid ? 
+  (<div className="control-error"><p>Enter valid email address!</p></div>) :
+  "";
 
   return (
-    <form>
+    <form onSubmit={handleSubmitEvent}>
       <h2>Login</h2>
 
       <div className="control-row">
         <div className="control no-margin">
           <label htmlFor="email">Email</label>
           <input id="email" type="text" name="email" ref={email}/>
-          { emailIsInvalid && <div className="control-error"><p>Enter valid email address!</p></div>}
+          { emailValidationHtml}
         </div>
 
         <div className="control no-margin">
