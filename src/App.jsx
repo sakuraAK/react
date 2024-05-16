@@ -6,9 +6,15 @@ import DeleteConfirmation from './components/DeleteConfirmation.jsx';
 import logoImg from './assets/logo.png';
 import AvailablePlaces from './components/AvailablePlaces.jsx';
 import { updateUserPlaces, fetchUserPlaces } from './http.js';
+import { AVAILABLE_PLACES } from './data.js';
+import { sortPlacesByDistance } from './loc.js';
 
 function App() {
   // const selectedPlace = useRef();
+
+  const [reloadPlaces, setReloadPlaces] = useState(false);
+
+  const [sortedPlaces, updateSortedPlaces] = useState([]);
 
   const [userPlaces, setUserPlaces] = useState([]);
 
@@ -24,23 +30,38 @@ function App() {
   }
 
   async function handleSelectPlace(selectedPlace) {
-    setUserPlaces((prevPickedPlaces) => {
-      if (!prevPickedPlaces) {
-        prevPickedPlaces = [];
-      }
-      if (prevPickedPlaces.some((place) => place.id === selectedPlace.id)) {
-        return prevPickedPlaces;
-      }
-      return [selectedPlace, ...prevPickedPlaces];
-    });
-    try {
-      const result = await updateUserPlaces([selectedPlace, ...userPlaces]);
-    }    
-    catch(error) {
-      //...
-    }
+    setReloadPlaces((prev) => !prev);
+    
+    // setUserPlaces((prevPickedPlaces) => {
+    //   if (!prevPickedPlaces) {
+    //     prevPickedPlaces = [];
+    //   }
+    //   if (prevPickedPlaces.some((place) => place.id === selectedPlace.id)) {
+    //     return prevPickedPlaces;
+    //   }
+    //   return [selectedPlace, ...prevPickedPlaces];
+    // });
+    // try {
+    //   const result = await updateUserPlaces([selectedPlace, ...userPlaces]);
+    // }    
+    // catch(error) {
+    //   //...
+    // }
 
   }
+
+  
+
+
+  useEffect(()=>{
+    navigator.geolocation.getCurrentPosition((position) => {
+      updateSortedPlaces(sortPlacesByDistance(AVAILABLE_PLACES, position.coords.latitude, position.coords.longitude));
+      console.log(sortedPlaces);
+    });
+  }, [reloadPlaces]);
+
+
+  
 
   // const handleRemovePlace = useCallback(async function handleRemovePlace() {
   //   setUserPlaces((prevPickedPlaces) =>
@@ -52,36 +73,39 @@ function App() {
 
 
   async function handleRemovePlace(selectedPlace) {
-    setUserPlaces((prevPickedPlaces) =>
-      prevPickedPlaces.filter((place) => place.id !== selectedPlace.id)
-    );
+    // setUserPlaces((prevPickedPlaces) =>
+    //   prevPickedPlaces.filter((place) => place.id !== selectedPlace.id)
+    // );
     
-    try {
-      await updateUserPlaces(userPlaces.filter((place) => place.id !== selectedPlace.id));
-    }
-    catch(error) {
-      //...
-    }
-    //setModalIsOpen(false);
+    // try {
+    //   await updateUserPlaces(userPlaces.filter((place) => place.id !== selectedPlace.id));
+    // }
+    // catch(error) {
+    //   //...
+    // }
+    // //setModalIsOpen(false);
   }
 
-  useEffect(() =>{
-    async function getUserPlaces() {
-      //setIsLoading(true);
-      try {
-        const places = await fetchUserPlaces(); 
-        setUserPlaces(places);
-      }
-      catch(error) {
-        setError({message: error.message});
-      }
-      //setIsLoading(false);
-    }
+
+
+
+  // useEffect(() =>{
+  //   async function getUserPlaces() {
+  //     //setIsLoading(true);
+  //     try {
+  //       const places = await fetchUserPlaces(); 
+  //       setUserPlaces(places);
+  //     }
+  //     catch(error) {
+  //       setError({message: error.message});
+  //     }
+  //     //setIsLoading(false);
+  //   }
       
-    getUserPlaces();
+  //   getUserPlaces();
 
     
-  }, []);
+  // }, []);
 
   return (
     <>
@@ -108,7 +132,11 @@ function App() {
           onSelectPlace={handleRemovePlace}
         />
 
-        <AvailablePlaces onSelectPlace={handleSelectPlace} />
+        <Places
+        title="Places"
+        places={sortedPlaces}
+        onSelectPlace={handleSelectPlace}
+        />
       </main>
     </>
   );
