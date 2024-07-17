@@ -39,10 +39,24 @@ export async function updateUserPlaces(places) {
 }
 
 
-//http://127.0.0.1:5000/api/programs
 
 export async function fetchPrograms() {
   const response = await fetch('http://127.0.0.1:5000/api/programs');
+  const resData = await response.json();
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch programs');
+  }
+
+  return resData;
+}
+
+
+
+//http://127.0.0.1:5000/api/users/1
+
+export async function getUserById(id) {
+  const response = await fetch(`http://127.0.0.1:5000/api/users/${id}`);
   const resData = await response.json();
 
   if (!response.ok) {
