@@ -2,7 +2,7 @@ import noProgramImage from '../assets/no-projects.png';
 import Button from './Button';
 
 
-export default function NoProgramSelected() {
+export default function NoProgramSelected({onAddNewProgram}) {
   return (
     <div className="mt-24 text-center w-2/3">
       <img
@@ -17,7 +17,7 @@ export default function NoProgramSelected() {
         Select a progtram or get started with a new one
       </p>
       <p className="mt-8">
-        <Button>Create new program</Button>
+        <Button onClick={onAddNewProgram}>Create new program</Button>
       </p>
     </div>
   );
