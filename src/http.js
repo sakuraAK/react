@@ -53,14 +53,46 @@ export async function fetchPrograms() {
 
 
 
-//http://127.0.0.1:5000/api/users/1
+const serviceUri = "http://127.0.0.1:5000/api"
 
 export async function getUserById(id) {
-  const response = await fetch(`http://127.0.0.1:5000/api/users/${id}`);
+  const response = await fetch(`${serviceUri}/users/${id}`);
   const resData = await response.json();
 
   if (!response.ok) {
     throw new Error('Failed to fetch programs');
+  }
+
+  return resData;
+}
+
+export async function addProgram(program) {
+  const response = await fetch(`${serviceUri}/programs`, {
+    method: 'POST',
+    body: JSON.stringify(program ),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  const resData = await response.json();
+
+  if (!response.ok) {
+    throw new Error('Failed to update user data.');
+  }
+
+  return resData;
+}
+
+export async function deleteProgram(programId) {
+  const response = await fetch(`${serviceUri}/programs/${programId}`, {
+    method: 'DELETE',
+  });
+
+  const resData = await response.json();
+
+  if (!response.ok) {
+    throw new Error('Failed to delete program.');
   }
 
   return resData;
