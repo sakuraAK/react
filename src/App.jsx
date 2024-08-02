@@ -8,16 +8,6 @@ import { useEffect, useState, useRef } from "react";
 
 function App() {
 
-  // useEffect(() => {
-  //   const testProgram = {
-  //     name: "Program A",
-  //     description: "Software developmnet program",
-  //     total_hours: 360,
-  //   };
-  //   addProgram(testProgram).then((result) => console.log(result));
-  // }, []);
-
-  // console.log(fetchPrograms());
   const [modalMessage, updateModalMessage] = useState("");
   
   const modalRef = useRef();
@@ -46,11 +36,24 @@ function App() {
   }
 
   function addNewProgramHandler(newProgram) {
-      updateProgramState((prevState) => ({
-        ...prevState,
-        programs: [...prevState.programs, newProgram],
-        selectedProgramId: undefined,
-      }));
+      try {
+        addProgram(newProgram).then((result) => {
+          updateProgramState((prevState) => ({
+            ...prevState,
+            programs: [...prevState.programs, result],
+            selectedProgramId: undefined,
+          }));
+          updateModalMessage("Program was sucessfully added.");
+          modalRef.current.open();
+        });
+      }
+      catch (e) {
+        console.log(e);
+        updateModalMessage("An error occurred.");
+      }
+     
+  
+      
   }
 
   function selectProgramHandler(selectedId) {
@@ -62,26 +65,31 @@ function App() {
   }
 
   function cancelAddNewProgramHandler() {
-    updateProgramState((preveState) => ({
-      ...preveState,
+    updateProgramState((prevState) => ({
+      ...prevState,
       selectedProgramId: undefined
     }));
   }
 
 
   function onDeleteProgramHandler() {
-    deleteProgram(programsState.selectedProgramId).then((result) => {
-      console.log(result);
-      updateModalMessage("Program deleted!")
+    try {
+      deleteProgram(programsState.selectedProgramId).then((result) => {
+        updateProgramState((prevState) => ({
+          ...prevState,
+          programs: prevState.programs.filter((program) => program.id !== prevState.selectedProgramId),
+          selectedProgramId: undefined,
+        }));
+      
+        updateModalMessage("Program removed!")
+        modalRef.current.open();
+      });
+    }
+    catch (e) {
+      updateModalMessage("An error occurred while removing program.")
       modalRef.current.open();
-    });
-  
+    }
     
-    updateProgramState((prevState) => ({
-      ...prevState,
-      programs: prevState.programs.filter((program) => program.id !== prevState.selectedProgramId),
-      selectedProgramId: undefined,
-    }));
 
   }
 

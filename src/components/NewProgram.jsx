@@ -12,7 +12,6 @@ export default function NewProgram({ onAdd, onCancel }) {
 
   function saveClickHandler() {
     let newProgram  = {
-      id: Math.random(),
       name: nameRef.current.value,
       description: descRef.current.value,
       totalHours: +totalHrsRef.current.value,

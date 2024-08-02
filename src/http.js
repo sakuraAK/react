@@ -40,20 +40,21 @@ export async function updateUserPlaces(places) {
 
 
 
+
+
+
+const serviceUri = "http://127.0.0.1:5000/api"
+
 export async function fetchPrograms() {
-  const response = await fetch('http://127.0.0.1:5000/api/programs');
+  const response = await fetch(`${serviceUri}/programs`);
   const resData = await response.json();
 
   if (!response.ok) {
     throw new Error('Failed to fetch programs');
   }
-
   return resData;
 }
 
-
-
-const serviceUri = "http://127.0.0.1:5000/api"
 
 export async function getUserById(id) {
   const response = await fetch(`${serviceUri}/users/${id}`);
@@ -81,7 +82,9 @@ export async function addProgram(program) {
     throw new Error('Failed to update user data.');
   }
 
-  return resData;
+  console.log(resData);
+  const result = { ...resData, totalHours: resData["total_hour"]}
+  return result;
 }
 
 export async function deleteProgram(programId) {
