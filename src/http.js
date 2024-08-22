@@ -100,3 +100,57 @@ export async function deleteProgram(programId) {
 
   return resData;
 }
+
+
+export async function fetchCourses() {
+  const response = await fetch(`${serviceUri}/courses`);
+  const resData = await response.json();
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch programs');
+  }
+  return resData;
+}
+
+
+export async function addCourse(course) {
+  let courseObject = { ...course, total_hours: course.totalHrs };
+  console.log(courseObject);
+  const response = await fetch(`${serviceUri}/courses`, {
+    method: 'POST',
+    body: JSON.stringify(courseObject),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  const resData = await response.json();
+
+  if (!response.ok) {
+    throw new Error('Failed to update user data.');
+  }
+
+  console.log(resData);
+  const result = { ...resData, totalHours: resData["total_hour"]}
+  return result;
+}
+
+
+export async function addCourseToProgram(course) {
+  const response = await fetch(`${serviceUri}/programs-courses/${course.programId}/${course.id}`, {
+    method: 'POST',
+    body: JSON.stringify(course),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  const resData = await response.json();
+
+  if (!response.ok) {
+    throw new Error('Failed to update user data.');
+  }
+
+  console.log(resData);
+  return result;
+}

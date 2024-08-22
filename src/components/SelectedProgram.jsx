@@ -1,5 +1,8 @@
+import Courses from "./Courses";
 
 export default function SelectedProgram({program, onDelete}) {
+
+
   return (
     <div className="w-[35rem] mt-16">
       <header className="pb-4 mb-4 border-b-2 border-stone-300">
@@ -18,11 +21,10 @@ export default function SelectedProgram({program, onDelete}) {
         <p className="mb-4 text-stone-400"></p>
         <p className="text-stone-600 whitespace-pre-wrap">
           {program.description}
-          {/* {program description} */}
+       
         </p>
       </header>
-      Courses
-      {/* courses */}
+      <Courses/>
     </div>
   );
 }

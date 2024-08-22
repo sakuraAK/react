@@ -62,6 +62,7 @@ export default function NewProgram({ onAdd, onCancel }) {
           <Input ref={nameRef} label="Name" textarea={false}/>
           <Input ref={descRef} label="Description" textarea={true}/>
           <Input ref={totalHrsRef} label="Total Hours" textarea={false} type="number"/>
+          
         </div>
       </div>
     </>
